@@ -1,0 +1,10 @@
+.text-decorator-none{
+    text-decoration: none;
+    color: white;
+}
+.fixarRodape {
+    bottom: 0;
+    position: display flex;
+    width: 100%;
+    text-align: center;
+}
