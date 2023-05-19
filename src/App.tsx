@@ -19,7 +19,7 @@ function App() {
               <Route path="/" element={<Login />} />  {/*muda de acordo com o caminho,rota*/}
               <Route path="/home" element={<Home />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/cadastro" element={<CadastroUsuario />} />
+              <Route path="/cadastrousuario" element={<CadastroUsuario />} />
             </Routes>
           </div>
         
