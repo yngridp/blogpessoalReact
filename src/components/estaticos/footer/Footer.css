@@ -8,3 +8,21 @@
     width: 100%;
     text-align: center;
 }
+.box1{
+    background-color: #2D232B;
+    height: 120px;
+}
+
+.box2{
+    background-color: #D9846F;
+    height: 60px;
+}
+
+.redes{
+    font-size: 60px !important;
+    color: white;
+}
+
+.textos{
+   color: white;
+}

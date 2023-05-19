@@ -10,11 +10,11 @@ function Navbar() {
          {/* </><Box style={{ backgroundColor:"#4F4F4F" }} > */}
           
 
-            <AppBar position="static" style={{ background:"#4F4F4F" }}>
+            <AppBar position="static" style={{ background:"#2D232B" }}>
                 <Toolbar variant="dense">
                 <Grid container direction="row" justifyContent="space-around" alignItems="center" >
                  <Grid alignItems="center" item xs={8}>
-                    <Box style={{ cursor: "pointer" }} >
+                    <Box className='cursor' >
                         <Typography variant="h2" color="inherit">
                             BlogPessoal
                         </Typography>
@@ -26,35 +26,35 @@ function Navbar() {
                  <Grid alignItems="flex-start" item xs={8}>
                     <Box display="flex" justifyContent="start">
                         <Link to='/home' className='text-decorator-none'>
-                            <Box mx={3} style={{ cursor: "pointer" }}>
+                            <Box mx={3} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     HOME
                                 </Typography>
                             </Box>
                         </Link>
 
-                        <Box mx={3} style={{ cursor: "pointer" }}>
+                        <Box mx={3} className='cursor'>
                             <Typography variant="h6" style={{ color: "yellow" }}>
                                 CRIAR POSTAGEM
                             </Typography>
                         </Box>
-                        <Box mx={3} style={{ cursor: "pointer" }}>
+                        <Box mx={3} className='cursor'>
                             <Typography variant="h6" color="inherit">
                                 POSTAGENS
                             </Typography>
                         </Box>
-                        <Box mx={3} style={{ cursor: "pointer" }}>
+                        <Box mx={3} className='cursor'>
                             <Typography variant="h6" color="inherit">
                                 TEMAS
                             </Typography>
                         </Box>
-                        <Box mx={2} style={{ cursor: "pointer" }}>
+                        <Box mx={2} className='cursor'>
                             <Typography variant="h6" color="inherit">
                                 CADASTRAR TEMA
                             </Typography>
                         </Box>
                         <Link to='/login' className='text-decorator-none'>
-                            <Box mx={3} style={{ cursor: "pointer" }}>
+                            <Box mx={3} className='cursor'>
                                 <Typography variant="h6" color="inherit">
                                     LOGOUT
                                 </Typography>

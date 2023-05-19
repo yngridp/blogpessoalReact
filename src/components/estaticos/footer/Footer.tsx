@@ -10,31 +10,31 @@ import './Footer.css';
 function Footer() {
     return (
         <>
-            <Grid container class="fixarRodape" direction="row" justifyContent="center" alignItems="center">
+            <Grid container className='fixarRodape' direction="row" justifyContent="center" alignItems="center">
                 <Grid alignItems="center" item xs={12}>
-                    <Box style={{ backgroundColor: "#4F4F4F", height: "120px" }}>
+                    <Box className='box1'>
                         <Box paddingTop={1} display="flex" alignItems="center" justifyContent="center">
-                            <Typography variant="h5" align="center" gutterBottom style={{ color: "white" }}>Siga-me nas redes sociais </Typography>
+                            <Typography variant=" h5" align="center" gutterBottom className='textos'>Siga-me nas redes sociais </Typography>
                         </Box>
                         <Box display="flex" alignItems="center" justifyContent="center">
                             <a href="https://github.com/yngridp" target="_blank">
-                                <GitHubIcon style={{ fontSize: 60, color: "white" }} />
+                                <GitHubIcon className='redes' />
                             </a>
                             <a href="https://www.instagram.com/yngrid.padilha/" target="_blank">
-                                <InstagramIcon style={{ fontSize: 60, color: "white" }} />
+                                <InstagramIcon className='redes' />
                             </a>
                             <a href="https://www.linkedin.com/in/yngrid-padilha-8ba3601a5/" target="_blank">
-                                <LinkedInIcon style={{ fontSize: 60, color: "white" }} />
+                                <LinkedInIcon className='redes' />
                             </a>
                         </Box>
                     </Box>
-                    <Box style={{ backgroundColor: "#1C1C1C", height: "60px" }}>
+                    <Box className='box2'>
                         <Box paddingTop={1}>
-                            <Typography variant="subtitle2" align="center" gutterBottom style={{ color: "white" }} >© 2023 Copyright:</Typography>
+                            <Typography variant="subtitle2" align="center" gutterBottom className='textos' >© 2023 Copyright:</Typography>
                         </Box>
                         <Box>
                             <a className='text-decorator-none' target="_blank" href="https://portifolioyngrid.bohr.io/">
-                                <Typography variant="subtitle2" gutterBottom style={{ color: "white" }} align="center">YngridPortifolio.com</Typography>
+                                <Typography variant="subtitle2" gutterBottom className='textos' align="center">YngridPortifolio.com</Typography>
                             </a>
                         </Box>
                     </Box>
