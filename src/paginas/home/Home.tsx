@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Typography, Grid, Button} from '@material-ui/core';
 import {Box} from '@mui/material';
 import './Home.css';
 import Carrossel from '../../components/carrossel/Carrossel';
+import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem';
+import { Link, useNavigate } from 'react-router-dom';
+import ModalPostagem from '../../components/postagens/modalPostagem/ModalPostagem';
+import useLocalStorage from 'react-use-localstorage';
 
 function Home() {
+    let navigate = useNavigate();
+    const [token, setToken] = useLocalStorage('token');
+    
+    useEffect(() => {
+      if (token == "") {
+          alert("Você precisa estar logado")
+          navigate("/login")
+  
+      }
+  }, [token])
+  
     return (
         <>
 
@@ -16,14 +31,17 @@ function Home() {
                     </Box>
                     <Box display="flex" justifyContent="center">
                         <Box marginRight={1}>
+                            <ModalPostagem />
                         </Box>
+                        <Link to='/postagens' >
                         <Button variant="outlined" className='botao'>Ver Postagens</Button>
+                        </Link>
                     </Box>
                 </Grid>
-                <Grid item xs={6} >
-                    <img src="https://i.imgur.com/kyx4MIx.jpg" alt="" className='img' />
-                </Grid>
+                <Grid xs={6} className='imagem'>
+                 </Grid>
                 <Grid xs={12} className='postagens'>
+                    <TabPostagem/>
                 </Grid>
             </Grid>    
             {/* /*ctrl ; comenta tudo */ }
