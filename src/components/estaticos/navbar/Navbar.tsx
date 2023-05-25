@@ -5,22 +5,41 @@ import { useNavigate } from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
 
 import './Navbar.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { UserState } from '../../../store/token/Reducer';
+import { addToken } from '../../../store/token/Actions';
+import {toast} from 'react-toastify';
 
 
 function Navbar() {
-    const [token, setToken] = useLocalStorage('token');
+    //const [token, setToken] = useLocalStorage('token');
     let navigate = useNavigate();
 
-    function goLogout() {
-        setToken('')
-        alert("Usuário deslogado")
+    const dispatch = useDispatch()
+
+    const token = useSelector<UserState, UserState["tokens"]>(
+        (state) => state.tokens
+      )
+
+      function goLogout(){
+        dispatch(addToken(''));
+        toast.info('Usuário deslogado', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });
         navigate('/login')
     }
-    return (
-        <>
-            {/* </><Box style={{ backgroundColor:"#4F4F4F" }} > */}
 
+    var navbarComponent;
 
+    if(token !== ''){
+        navbarComponent =                      
             <AppBar position="static" style={{ background: "#2D232B" }}>
                 <Toolbar variant="dense">
                     <Grid container direction="row" justifyContent="space-around" alignItems="center" >
@@ -87,9 +106,12 @@ function Navbar() {
 
                 </Toolbar>
             </AppBar >
-
-        </>
-    )
 }
+            return(
+                <>
+                {navbarComponent}
+                </>
+            )
+     }
 
 export default Navbar;

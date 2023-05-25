@@ -12,14 +12,20 @@ import CadastroPost from './components/postagens/cadastroPost/CadastroPost';
 import CadastroTema from './components/temas/cadastroTema/CadastroTema';
 import DeletarPostagem from './components/postagens/deletarPostagem/DeletarPostagem';
 import DeletarTema from './components/temas/deletarTema/DeletarTema';
+import store from './store/Store';
+import { Provider } from 'react-redux';
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
 
   return (
-    <>
-      <BrowserRouter>
-        <Navbar /> {/*sempre vai ser carreagdor,componente estatico*/}
-        
+    <Provider store={store}>
+      <ToastContainer/>
+      <>
+        <BrowserRouter>
+          <Navbar /> {/*sempre vai ser carreagdor,componente estatico*/}
+
           <div style={{ minHeight: '100vh' }}>
             <Routes>
               <Route path="/" element={<Login />} />  {/*muda de acordo com o caminho,rota*/}
@@ -31,22 +37,23 @@ function App() {
 
               <Route path="/formularioPostagem" element={<CadastroPost />} />
 
-<Route path="/formularioPostagem/:id" element={<CadastroPost />} />
+              <Route path="/formularioPostagem/:id" element={<CadastroPost />} />
 
-<Route path="/formularioTema" element={<CadastroTema />} />
+              <Route path="/formularioTema" element={<CadastroTema />} />
 
-<Route path="/formularioTema/:id" element={<CadastroTema />} />
+              <Route path="/formularioTema/:id" element={<CadastroTema />} />
 
-<Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
+              <Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
 
-<Route path="/deletarTema/:id" element={<DeletarTema />} />
+              <Route path="/deletarTema/:id" element={<DeletarTema />} />
 
             </Routes>
           </div>
-        
-        <Footer /> {/*sempre vai ser carregado,componente estatico*/}
-      </BrowserRouter>
-    </>
+
+          <Footer /> {/*sempre vai ser carregado,componente estatico*/}
+        </BrowserRouter>
+      </>
+    </Provider>
   );
 }
 
