@@ -14,46 +14,65 @@ import DeletarPostagem from './components/postagens/deletarPostagem/DeletarPosta
 import DeletarTema from './components/temas/deletarTema/DeletarTema';
 import store from './store/Store';
 import { Provider } from 'react-redux';
-import {ToastContainer} from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
 function App() {
+  const THEME = createTheme({
+    palette: {
+      primary: {
+        light: '#420f0c',
+        main: '#420f0c',
+        dark: '#c98d89',
+        contrastText: '#ecd3b4',
+      },
+      secondary: {
+        light: '#420f0c',
+        main: '#fbfe30',
+        dark: '#2a3eb1',
+        contrastText: '#fff',
+      },
+    },
+  });
 
   return (
-    <Provider store={store}>
-      <ToastContainer/>
-      <>
-        <BrowserRouter>
-          <Navbar /> {/*sempre vai ser carreagdor,componente estatico*/}
+    <>
+      <MuiThemeProvider theme={THEME}>
+        <Provider store={store}>
+          <ToastContainer />
+          <BrowserRouter>
+            <Navbar /> {/*sempre vai ser carreagdor,componente estatico*/}
 
-          <div style={{ minHeight: '100vh' }}>
-            <Routes>
-              <Route path="/" element={<Login />} />  {/*muda de acordo com o caminho,rota*/}
-              <Route path="/home" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/cadastrousuario" element={<CadastroUsuario />} />
-              <Route path="/tema" element={<ListaTema />} />
-              <Route path="/postagens" element={<ListaPostagem />} />
+            <div style={{ minHeight: '100vh' }}>
+              <Routes>
+                <Route path="/" element={<Login />} />  {/*muda de acordo com o caminho,rota*/}
+                <Route path="/home" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cadastrousuario" element={<CadastroUsuario />} />
+                <Route path="/tema" element={<ListaTema />} />
+                <Route path="/postagens" element={<ListaPostagem />} />
 
-              <Route path="/formularioPostagem" element={<CadastroPost />} />
+                <Route path="/formularioPostagem" element={<CadastroPost />} />
 
-              <Route path="/formularioPostagem/:id" element={<CadastroPost />} />
+                <Route path="/formularioPostagem/:id" element={<CadastroPost />} />
 
-              <Route path="/formularioTema" element={<CadastroTema />} />
+                <Route path="/formularioTema" element={<CadastroTema />} />
 
-              <Route path="/formularioTema/:id" element={<CadastroTema />} />
+                <Route path="/formularioTema/:id" element={<CadastroTema />} />
 
-              <Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
+                <Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
 
-              <Route path="/deletarTema/:id" element={<DeletarTema />} />
+                <Route path="/deletarTema/:id" element={<DeletarTema />} />
 
-            </Routes>
-          </div>
+              </Routes>
+            </div>
 
-          <Footer /> {/*sempre vai ser carregado,componente estatico*/}
-        </BrowserRouter>
-      </>
-    </Provider>
+            <Footer /> {/*sempre vai ser carregado,componente estatico*/}
+          </BrowserRouter>
+        </Provider>
+      </MuiThemeProvider>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
-.imagem{
-    background-image: url(https://i.imgur.com/d5bMdDJ.jpg);
+.imagem1{
+    background-image: url(https://i.imgur.com/kIvWUmh.jpg);
     background-repeat: no-repeat;
     width: 100vh;
     min-height: 100vh;
@@ -7,15 +7,15 @@
     background-position: center;
 }
 .caixa{
-    background-color:#D9846F !important;
-}
+    background-image: url(https://i.imgur.com/MYakXPi.jpg);
+}    
 .titulo{
     color: white !important;
     font-Weight: bold !important;
 }
 .botao{
     border-color: white !important;
-    background-color: #2D232B !important;
+    background-color: #420f0c !important;
     color: white !important;
 }
 .postagens{

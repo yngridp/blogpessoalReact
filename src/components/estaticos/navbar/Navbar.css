@@ -8,5 +8,34 @@
     color: white;
 }
 .fundo{
-    background-color: #2D232B;
+    background-color: #ce5e1e;
+}
+.opcaoHome {
+    color: #fbfe30;
+    text-align: center;
+    text-transform: uppercase;
+	font-size: 0.5 rem;
+	font-family: 'Pathway Gothic One', sans-serif;
+    letter-spacing: 1px;
+    min-width: 90px;
+    cursor: "pointer"
+}
+.itens{
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+	font-size: 0.5 rem;
+	font-family: 'Pathway Gothic One', sans-serif;
+    letter-spacing: 1px;
+    min-width: 90px;
+    cursor: "pointer";
+    margin-right: 100%;
+}
+.blog {
+    color: #fbfe30 !important;
+    font-Weight: bold !important;
+}
+.criar {
+    color: white !important;
+    font-Weight: bold !important;
 }

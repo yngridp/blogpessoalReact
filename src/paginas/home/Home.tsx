@@ -6,10 +6,8 @@ import Carrossel from '../../components/carrossel/Carrossel';
 import TabPostagem from '../../components/postagens/tabpostagem/TabPostagem';
 import { Link, useNavigate } from 'react-router-dom';
 import ModalPostagem from '../../components/postagens/modalPostagem/ModalPostagem';
-import useLocalStorage from 'react-use-localstorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../store/token/Reducer';
-import { addToken } from '../../store/token/Actions';
 import { toast } from 'react-toastify';
 
 function Home() {
@@ -54,7 +52,7 @@ function Home() {
                         </Link>
                     </Box>
                 </Grid>
-                <Grid xs={6} className='imagem'>
+                <Grid xs={6} className='imagem1'>
                  </Grid>
                 <Grid xs={12} className='postagens'>
                     <TabPostagem/>
