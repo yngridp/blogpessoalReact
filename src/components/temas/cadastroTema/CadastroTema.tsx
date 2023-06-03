@@ -8,6 +8,7 @@ import { buscaId, post, put } from '../../../services/Service';
 import { useSelector } from 'react-redux';
 import { UserState } from '../../../store/token/Reducer';
 import { toast } from 'react-toastify';
+import { addToken } from '../../../store/token/Actions';
 
 
 function CadastroTema() {
@@ -18,12 +19,13 @@ function CadastroTema() {
       );
     const [tema, setTema] = useState<Tema>({
         id: 0,
-        descricao: ''
+        descricao: '',
+        postagens: []
     })
 
     useEffect(() => {
         if (token == "") {
-            toast.error('Você precisa estar logado', {
+            toast.error('Usuário não autenticado!', {
                 position: "top-right",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -45,12 +47,18 @@ function CadastroTema() {
     }, [id])
 
     async function findById(id: string) {
-        buscaId(`/tema/${id}`, setTema, {
-            headers: {
-              'Authorization': token
+        try {
+            await buscaId(`/tema/${id}`, setTema, {
+                headers: {
+                    'Authorization': token
+                }
+            })
+        } catch (error: any) {
+            if (error.response?.status === 403) {
+                dispatch(addToken(''))
             }
-          })
         }
+    }
 
         function updatedTema(e: ChangeEvent<HTMLInputElement>) {
 
@@ -63,15 +71,14 @@ function CadastroTema() {
         
         async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
             e.preventDefault()
-            console.log("tema " + JSON.stringify(tema))
     
             if (id !== undefined) {
-                console.log(tema)
-                put(`/tema`, tema, setTema, {
-                    headers: {
-                        'Authorization': token
-                    }
-                })
+                try {
+                    await put(`/tema`, tema, setTema, {
+                        headers: {
+                            'Authorization': token
+                        }
+                    })
                 toast.success('Tema atualizado com sucesso', {
                     position: "top-right",
                     autoClose: 2000,
@@ -82,22 +89,55 @@ function CadastroTema() {
                     theme: "colored",
                     progress: undefined,
                     });
-            } else {
-                post(`/tema`, tema, setTema, {
-                    headers: {
-                        'Authorization': token
+                } catch (error: any) {
+                    if (error.response?.status === 403) {
+                        dispatch(addToken(''))
+                    } else {
+                        toast.error("Erro ao Atualizar o Tema", {
+                            position: 'top-right',
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: false,
+                            theme: 'colored',
+                            progress: undefined,
+                        });
                     }
-                })
-                toast.success('Tema cadastrado com sucesso', {
-                    position: "top-right",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                    theme: "colored",
-                    progress: undefined,
+                }
+            } else {
+                try {
+                    await post(`/tema`, tema, setTema, {
+                        headers: {
+                            'Authorization': token
+                        }
+                    })
+                    toast.success('Tema cadastrado com sucesso!', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        theme: 'colored',
+                        progress: undefined,
                     });
+                } catch (error: any) {
+                    if (error.response?.status === 403) {
+                        dispatch(addToken(''))
+                    } else {
+                        toast.error("Erro ao Cadastrar o Tema", {
+                            position: 'top-right',
+                            autoClose: 2000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: false,
+                            theme: 'colored',
+                            progress: undefined,
+                        });
+                    }
+                }
             }
             back()
     
@@ -113,7 +153,7 @@ function CadastroTema() {
                 <Typography variant="h3" color="textSecondary" component="h1" align="center" >Formulário de cadastro tema</Typography>
                 <TextField value={tema.descricao} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedTema(e)} id="descricao" label="descricao" variant="outlined" name="descricao" margin="normal" fullWidth />
                 <Button type="submit" variant="contained" color="primary">
-                    Finalizar
+                {tema.id ? 'Atualizar' : 'Cadastrar'}
                 </Button>
             </form>
         </Container>
@@ -121,3 +161,7 @@ function CadastroTema() {
 }
 
 export default CadastroTema;
+
+function dispatch(arg0: any) {
+    throw new Error('Function not implemented.');
+}

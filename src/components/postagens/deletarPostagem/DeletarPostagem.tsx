@@ -1,32 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { Typography, Button, Card, CardActions, CardContent } from "@material-ui/core"
+import { Button, Card, CardActions, CardContent, Typography } from "@material-ui/core";
 import { Box } from '@mui/material';
-import './DeletarPostagem.css';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from "react-toastify";
 import Postagem from '../../../models/Postagem';
 import { buscaId, deleteId } from '../../../services/Service';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { addToken } from "../../../store/token/Actions";
 import { UserState } from '../../../store/token/Reducer';
-import { toast } from 'react-toastify';
+import './DeletarPostagem.css';
 
 function DeletarPostagem() {
+
   let navigate = useNavigate();
+
   const { id } = useParams<{ id: string }>();
+
+  const dispatch = useDispatch()
+
   const token = useSelector<UserState, UserState["tokens"]>(
     (state) => state.tokens
-  );
+  )
+
   const [post, setPostagens] = useState<Postagem>()
 
   useEffect(() => {
-    if (token == "") {
-      toast.error('Você precisa estar logado', {
-        position: "top-right",
+    if (token === "") {
+      toast.error('Usuário não autenticado!', {
+        position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        theme: "colored",
+        theme: 'colored',
         progress: undefined,
       });
       navigate("/login")
@@ -41,36 +48,58 @@ function DeletarPostagem() {
   }, [id])
 
   async function findById(id: string) {
-    buscaId(`/postagens/${id}`, setPostagens, {
-      headers: {
-        'Authorization': token
+    try {
+      await buscaId(`/postagens/${id}`, setPostagens, {
+        headers: {
+          'Authorization': token
+        }
+      })
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        dispatch(addToken(''))
       }
-    })
+    }
   }
 
-  function sim() {
-    navigate('/postagens') // rota de front end
-    deleteId(`/postagens/${id}`, { // rota bach end
-      headers: {
-        'Authorization': token
+  async function sim() {
+    navigate('/postagens')
+    try {
+      await deleteId(`/postagens/${id}`, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      toast.success('Postagem deletada com sucesso!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: 'colored',
+        progress: undefined,
+      });
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        dispatch(addToken(''))
+      } else {
+        toast.error("Erro ao Deletar Postagem", {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          theme: 'colored',
+          progress: undefined,
+        });
       }
-    });
-    toast.success('Postagem deletada com sucesso', {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      theme: "colored",
-      progress: undefined,
-    });
+    }
   }
 
   function nao() {
     navigate('/postagens')
   }
-
   return (
     <>
       <Box m={2}>

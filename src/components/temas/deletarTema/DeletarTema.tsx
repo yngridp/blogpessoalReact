@@ -6,14 +6,18 @@ import {useNavigate, useParams } from 'react-router-dom';
 import useLocalStorage from 'react-use-localstorage';
 import { buscaId, deleteId } from '../../../services/Service';
 import Tema from '../../../models/Tema';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../../store/token/Reducer';
 import { toast } from 'react-toastify';
+import { addToken } from '../../../store/token/Actions';
 
 
 function DeletarTema() {
     let navigate = useNavigate();
     const { id } = useParams<{id: string}>();
+
+    const dispatch = useDispatch()
+    
     const token = useSelector<UserState, UserState["tokens"]>(
       (state) => state.tokens
     );
@@ -21,7 +25,7 @@ function DeletarTema() {
 
     useEffect(() => {
         if (token == "") {
-          toast.error('Você precisa estar logado', {
+          toast.error('Usuário não autenticado!', {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -43,20 +47,27 @@ function DeletarTema() {
     }, [id])
 
     async function findById(id: string) {
-        buscaId(`/tema/${id}`, setTema, {
-            headers: {
-              'Authorization': token
-            }
-          })
+      try {
+        await buscaId(`/tema/${id}`, setTema, {
+          headers: {
+            'Authorization': token
+          }
+        })
+      } catch (error: any) {
+        if (error.response?.status === 403) {
+          dispatch(addToken(''))
         }
+      }
+    }
 
-        function sim() {
-          navigate('/tema')
-            deleteId(`/tema/${id}`, {
-              headers: {
-                'Authorization': token
-              }
-            });
+    async function sim() {
+      navigate('/tema')
+      try {
+        await deleteId(`/tema/${id}`, {
+          headers: {
+            'Authorization': token
+          }
+        });
             toast.success('Tema deletado com sucesso', {
               position: "top-right",
               autoClose: 2000,
@@ -67,6 +78,22 @@ function DeletarTema() {
               theme: "colored",
               progress: undefined,
               });
+            } catch (error: any) {
+              if (error.response?.status === 403) {
+                dispatch(addToken(''))
+              } else {
+                toast.error("Erro ao Deletar Tema", {
+                  position: 'top-right',
+                  autoClose: 2000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: false,
+                  draggable: false,
+                  theme: 'colored',
+                  progress: undefined,
+                });
+              }
+            }
           }
         
           function nao() {

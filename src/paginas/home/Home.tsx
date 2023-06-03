@@ -58,18 +58,6 @@ function Home() {
                     <TabPostagem/>
                 </Grid>
             </Grid>    
-            {/* /*ctrl ; comenta tudo */ }
-
-            {/* <Grid container style={{ marginTop: "0px" }}>
-                <Grid item xs={12}>
-                   <img className='img' src="https://blueedtech.com.br/wp-content/uploads/2021/07/motivos_programar-scaled.jpg" alt="" width="700px" height="500px"/>
-                </Grid>
-            </Grid>
-            <Grid container style={{ marginTop: "0px" }}>
-                <Grid item xs={4}>
-                   <img  src="https://blueedtech.com.br/wp-content/uploads/2021/07/motivos_programar-scaled.jpg" alt="" width="571px" height="500px"/>
-                </Grid>
-            </Grid>*/}
             <Grid container style={{ marginTop: "0px" }}>
                 <Grid item xs={12}>
                    <Carrossel />

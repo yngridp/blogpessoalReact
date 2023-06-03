@@ -1,54 +1,63 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
-import { Grid, Typography, TextField, Button } from '@material-ui/core';
-import {Box} from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import useLocalStorage from 'react-use-localstorage';
-import { api, login } from '../../services/Service';
-import UserLogin from '../../models/UserLogin';
-import './Login.css';
+import { Button, Grid, TextField, Typography } from '@material-ui/core';
+import { Box } from '@mui/material';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addToken } from '../../store/token/Actions';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import UserLogin from '../../models/UserLogin';
+import { login } from '../../services/Service';
+import { addId, addToken } from '../../store/token/Actions';
+import './Login.css';
 
 function Login() {
+    
     let navigate = useNavigate();
-   // const [token, setToken] = useLocalStorage('token');
-   
-   const dispatch = useDispatch();
-
-   const [token, setToken] = useState("");
+    
+    const dispatch = useDispatch();
    
    const [userLogin, setUserLogin] = useState<UserLogin>(
         {
             id: 0,
+            nome:'',
             usuario: '',
+            foto: "",
             senha: '',
             token: ''
-        }
-        )
+        })
+        const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
+
+            id: 0,
+            nome: '',
+            usuario: '',
+            foto: "",
+            senha: '',
+            token: ''
+        })
 
         function updatedModel(e: ChangeEvent<HTMLInputElement>) {
-
             setUserLogin({
                 ...userLogin,
                 [e.target.name]: e.target.value
             })
+            console.log(Object.values(userLogin))
         }
-
-            useEffect(()=>{
-                if(token !== ''){
-
-                    console.log("Token:", token)
-
-                    dispatch(addToken(token))
-                    navigate('/home')
-                }
-            }, [token])
-
+    
+        useEffect(() => {
+            if (respUserLogin.token !== "") {
+    
+                console.log("Token: " + respUserLogin.token)
+                console.log("ID: " + respUserLogin.id)
+    
+                dispatch(addToken(respUserLogin.token))
+                dispatch(addId(respUserLogin.id.toString()))    
+                navigate('/home')
+            }
+        }, [respUserLogin.token])
+    
         async function onSubmit(e: ChangeEvent<HTMLFormElement>){
             e.preventDefault();
             try{
-                await login(`/usuarios/logar`, userLogin, setToken)
+                await login(`/usuarios/logar`, userLogin, setRespUserLogin)
                 toast.success('Usuário logado com sucesso!', {
                     position: "top-right",
                     autoClose: 2000,
@@ -60,7 +69,7 @@ function Login() {
                     progress: undefined,
                     });
             }catch(error){
-                toast.error('Dados do usuário inconsistentes. Erro ao logar!', {
+                toast.error('Erro ao efetuar login! Verifique os dados do Usuário!', {
                     position: "top-right",
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -83,7 +92,7 @@ function Login() {
                         <TextField value={userLogin.senha} onChange={(e:ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password'fullWidth />
                         <Box marginTop={2} textAlign='center'>
                                 <Button type='submit' variant='contained' color='primary'>
-                                    Logar
+                                    Entrar
                                 </Button>
                         </Box>
                     </form>
@@ -106,3 +115,4 @@ function Login() {
 }
 
 export default Login;
+

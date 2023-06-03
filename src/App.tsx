@@ -13,10 +13,12 @@ import CadastroTema from './components/temas/cadastroTema/CadastroTema';
 import DeletarPostagem from './components/postagens/deletarPostagem/DeletarPostagem';
 import DeletarTema from './components/temas/deletarTema/DeletarTema';
 import store from './store/Store';
+import Perfil from './paginas/perfil/Perfil';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+import AtualizarUsuario from './components/usuarios/atulizarusuario/AtualizarUsuario';
 
 function App() {
   const THEME = createTheme({
@@ -28,10 +30,10 @@ function App() {
         contrastText: '#ecd3b4',
       },
       secondary: {
-        light: '#420f0c',
+        light: '#BBABC1',
         main: '#fbfe30',
-        dark: '#2a3eb1',
-        contrastText: '#fff',
+        dark: '#504455',
+        contrastText: '#ffff',
       },
     },
   });
@@ -52,18 +54,15 @@ function App() {
                 <Route path="/cadastrousuario" element={<CadastroUsuario />} />
                 <Route path="/tema" element={<ListaTema />} />
                 <Route path="/postagens" element={<ListaPostagem />} />
-
                 <Route path="/formularioPostagem" element={<CadastroPost />} />
-
                 <Route path="/formularioPostagem/:id" element={<CadastroPost />} />
-
                 <Route path="/formularioTema" element={<CadastroTema />} />
-
                 <Route path="/formularioTema/:id" element={<CadastroTema />} />
-
                 <Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
-
                 <Route path="/deletarTema/:id" element={<DeletarTema />} />
+                <Route path="/perfil" element={<Perfil />} />
+            <Route path="/atualizarusuario" element={<AtualizarUsuario />} />
+            {/* <Route path="/postagensportitulo" element={<ListaPostagemPorTitulo />} /> */}
 
               </Routes>
             </div>

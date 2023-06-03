@@ -4,15 +4,18 @@ import {Card, CardActions, CardContent, Button, Typography } from '@material-ui/
 import {Box} from '@mui/material';
 import Tema from '../../../models/Tema';
 import './ListaTema.css';
-import useLocalStorage from 'react-use-localstorage';
 import {useNavigate} from 'react-router-dom'
 import { busca } from '../../../services/Service';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../../store/token/Reducer';
 import { toast } from 'react-toastify';
+import { addToken } from '../../../store/token/Actions';
 
 function ListaTema() {
   const[temas, setTemas] = useState<Tema[]>([])
+
+  const dispatch = useDispatch()
+
   const token = useSelector<UserState, UserState["tokens"]>(
     (state) => state.tokens
   );
@@ -20,7 +23,7 @@ function ListaTema() {
 
   useEffect(() =>{
     if(token == ''){
-      toast.error('Você precisa estar logado', {
+      toast.error('Usuário não autenticado!', {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -35,11 +38,17 @@ function ListaTema() {
   },[token])
 
   async function getTema(){
-    await busca("/tema", setTemas, {
-      headers: {
-        'Authorization': token
+    try {
+      await busca("/tema", setTemas, {
+        headers: {
+          'Authorization': token
+        }
+      })
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        dispatch(addToken(''))
       }
-    })
+    }
   }
 
   useEffect(()=>{
@@ -48,13 +57,14 @@ function ListaTema() {
 
   return (
     <>
-      {
-        temas.map(tema =>(
-      <Box m={2} >
-        <Card variant="outlined">
+       {temas.length === 0 ? (<div className="spinner"></div>) : (
+        temas.map((tema) => (
+          
+      <Box marginX={20} m={2} >
+        <Card variant="outlined" className='corcard'>
           <CardContent>
             <Typography color="textSecondary" gutterBottom>
-              Tema
+             Descrição:
             </Typography>
             <Typography variant="h5" component="h2">
               {tema.descricao}
@@ -72,7 +82,7 @@ function ListaTema() {
               </Link>
               <Link to={`/deletarTema/${tema.id}`}  className="text-decorator-none">
                 <Box mx={1}>
-                  <Button variant="contained" size='small' color="secondary">
+                  <Button variant="contained" size='small' color="secondary" className='letradeletar'>
                     deletar
                   </Button>
                 </Box>
@@ -82,7 +92,7 @@ function ListaTema() {
         </Card>
       </Box>
       ))
-     }
+     )}
     </>
   );
 }

@@ -2,12 +2,11 @@ import { AppBar, Grid, Toolbar, Typography } from '@material-ui/core';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
 import './Navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { UserState } from '../../../store/token/Reducer';
 import { addToken } from '../../../store/token/Actions';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 function Navbar() {
@@ -18,11 +17,11 @@ function Navbar() {
 
     const token = useSelector<UserState, UserState["tokens"]>(
         (state) => state.tokens
-      )
+    )
 
-      function goLogout(){
+    function goLogout() {
         dispatch(addToken(''));
-        toast.info('Usuário deslogado', {
+        toast.info('Usuário Desconectado!', {
             position: "top-right",
             autoClose: 2000,
             hideProgressBar: false,
@@ -37,13 +36,13 @@ function Navbar() {
 
     var navbarComponent;
 
-    if(token !== ''){
-        navbarComponent =                      
+    if (token !== '') {
+        navbarComponent =
             <AppBar position="static" style={{ background: "#420f0c" }}>
                 <Toolbar variant="dense">
                     <Grid container direction="row" justifyContent="space-around" alignItems="center" >
                         <Grid alignItems="center" item xs={6}>
-                            <Box  className="opcaoHome" mx={1} >
+                            <Box className="opcaoHome" mx={1} >
                                 <Typography variant="h4" className='blog' component="h3" align="center">
                                     BlogPessoal
                                 </Typography>
@@ -55,21 +54,12 @@ function Navbar() {
                         <Grid alignItems="flex-start" item xs={6}>
                             <Box display="flex" justifyContent="start">
                                 <Link to='/home' className='text-decorator-none'>
-                                    <Box  className="itens" mx={1}>
-                                        <Typography variant="h6" className='blog' component="h3"color="inherit">
+                                    <Box className="itens" mx={1}>
+                                        <Typography variant="h6" className='blog' component="h3" color="inherit">
                                             HOME
                                         </Typography>
                                     </Box>
                                 </Link>
-
-                                <Link to='/formularioPostagem' className='text-decorator-none'>
-                                    <Box className="opcaoHome" mx={1}>
-                                        <Typography variant="h7" className='criar' component="h3" style={{ color: "yellow" }}>
-                                            CRIAR POSTAGEM
-                                        </Typography>
-                                    </Box>
-                                </Link>
-
                                 <Link to='/postagens' className='text-decorator-none'>
                                     <Box className="itens" mx={1}>
                                         <Typography variant="h6" className='blog' component="h3" color="inherit">
@@ -86,8 +76,15 @@ function Navbar() {
                                 </Link>
                                 <Link to='/formularioTema' className='text-decorator-none'>
                                     <Box className="itens" mx={1}>
-                                        <Typography variant="h7" className='criar' component="h3" color="inherit">
+                                        <Typography variant="h6" className='criar' component="h3" color="inherit">
                                             CADASTRAR TEMA
+                                        </Typography>
+                                    </Box>
+                                </Link>
+                                <Link to="/perfil" className="text-decorator-none">
+                                    <Box className="itens" mx={1}>
+                                        <Typography variant="h6" className='blog' component="h3" color="inherit">
+                                            Perfil
                                         </Typography>
                                     </Box>
                                 </Link>
@@ -105,12 +102,12 @@ function Navbar() {
 
                 </Toolbar>
             </AppBar >
+    }
+    return (
+        <>
+            {navbarComponent}
+        </>
+    )
 }
-            return(
-                <>
-                {navbarComponent}
-                </>
-            )
-     }
 
 export default Navbar;
